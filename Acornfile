@@ -1,0 +1,18 @@
+containers: {
+	registry: {
+		image: "registry:2"
+		ports: "5000/tcp"
+	}
+
+    nginx: {
+        image: "nginx:latest"
+        dependsOn: [
+            "registry"
+        ] 
+        scale: 1
+        dirs: {
+            "/etc/nginx/conf.d/default.conf": "./default.conf"
+        }
+        ports: publish: "80/http"
+    }
+}
